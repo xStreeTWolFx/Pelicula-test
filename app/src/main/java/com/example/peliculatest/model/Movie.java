@@ -1,7 +1,14 @@
 package com.example.peliculatest.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "movies")
 public class Movie {
 
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     private int id;
     private String title;
     private String overview;
