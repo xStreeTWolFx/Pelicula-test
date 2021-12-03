@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.peliculatest.ui.fragments.FavoriteMovieFragment;
+import com.example.peliculatest.ui.fragments.FavoriteMovieListFragment;
 import com.example.peliculatest.ui.fragments.MovieListFragment;
 
 public class MoviePagerAdapter extends FragmentStateAdapter {
@@ -31,7 +31,7 @@ public class MoviePagerAdapter extends FragmentStateAdapter {
             case 0:
                 return new MovieListFragment();
             case 1:
-                return new FavoriteMovieFragment();
+                return new FavoriteMovieListFragment();
             default:
                 return new Fragment();
         }
