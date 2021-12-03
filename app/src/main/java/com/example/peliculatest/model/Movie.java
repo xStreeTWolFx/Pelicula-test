@@ -15,6 +15,7 @@ public class Movie {
     private Long releaseDate;
     private String posterPath;
     private Double voteAverage;
+    private boolean favorite = false;
 
     public Movie(int id, String title, String overview, Long releaseDate, String posterPath, Double voteAverage) {
         this.id = id;
@@ -38,7 +39,7 @@ public class Movie {
     }
 
     public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+        this.posterPath = cleanPath(posterPath);
     }
 
     public String getTitle() {
@@ -72,4 +73,18 @@ public class Movie {
     public void setVoteAverage(Double voteAverage) {
         this.voteAverage = voteAverage;
     }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    private String cleanPath(String posterPath) {
+        int pos = posterPath.lastIndexOf("/");
+        return posterPath.substring(pos + 1);
+    }
+
 }
