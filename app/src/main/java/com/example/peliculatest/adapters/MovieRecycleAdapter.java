@@ -1,7 +1,9 @@
 package com.example.peliculatest.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.peliculatest.R;
 import com.example.peliculatest.model.Movie;
+import com.example.peliculatest.repository.MovieRepository;
+import com.example.peliculatest.ui.activities.DetailActivity;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -24,8 +28,10 @@ import java.util.List;
 public class MovieRecycleAdapter extends RecyclerView.Adapter<MovieRecycleAdapter.ViewHolder> {
     List<Movie> movieList = new ArrayList<>();
     Context context;
+    MovieRepository movieRepository;
 
     public MovieRecycleAdapter(Context context) {
+        this.movieRepository = new MovieRepository(context);
         this.context = context;
     }
 
@@ -49,7 +55,18 @@ public class MovieRecycleAdapter extends RecyclerView.Adapter<MovieRecycleAdapte
             @Override
             public void onClick(View view) {
                 movie.setFavorite(!movie.isFavorite());
-                notifyDataSetChanged();
+                movieRepository.insert(movie);
+                notifyItemChanged(holder.getAdapterPosition());
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DetailActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(DetailActivity.MOVIE_ID_KEY, movie.getId());
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
         String path = movie.getPosterPath();
