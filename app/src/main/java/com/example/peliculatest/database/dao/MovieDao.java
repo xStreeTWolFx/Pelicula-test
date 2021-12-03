@@ -29,4 +29,9 @@ public interface MovieDao {
     @Query("SELECT * from movies ORDER BY id DESC")
     List<Movie> getAllMovies();
 
+    @Query("SELECT * FROM movies WHERE favorite = 1 ORDER BY id DESC")
+    List<Movie> getFavoriteMovies();
+
+    @Query("SELECT * from movies WHERE id = :movieId")
+    Movie getMovie(Integer movieId);
 }

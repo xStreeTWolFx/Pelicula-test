@@ -16,6 +16,7 @@ import com.example.peliculatest.utilities.NetworkUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 public class MovieRepository {
 
@@ -23,12 +24,17 @@ public class MovieRepository {
     private MovieDao movieDao;
     private MovieService service;
     private MutableLiveData<List<Movie>> moviesLive;
+    private MutableLiveData<List<Movie>> favoriteLive;
+    private MutableLiveData<Movie> movieLive;
+
 
     public MovieRepository(Context context) {
         db = Database.getDatabase(context);
         movieDao = db.movieDao();
         service = new MovieService();
         moviesLive = new MutableLiveData<>();
+        favoriteLive = new MutableLiveData<>();
+        movieLive = new MutableLiveData<>();
     }
 
     public LiveData<List<Movie>> getMovies(Context context) {
@@ -92,5 +98,19 @@ public class MovieRepository {
         Database.databaseWriteExecutor.execute(() -> {
             moviesLive.postValue(movieDao.getAllMovies());
         });
+    }
+
+    public LiveData<List<Movie>> getFavoriteMovies() {
+        Database.databaseWriteExecutor.execute(() -> {
+            favoriteLive.postValue(movieDao.getFavoriteMovies());
+        });
+        return favoriteLive;
+    }
+
+    public LiveData<Movie> getMovie(Integer movieId)  {
+        Database.databaseWriteExecutor.execute(() -> {
+            movieLive.postValue(movieDao.getMovie(movieId));
+        });
+        return movieLive;
     }
 }
